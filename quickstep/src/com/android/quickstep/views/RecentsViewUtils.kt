@@ -217,9 +217,11 @@ constructor(
                 }
             } else {
                 val centerPageIndex: Int = recentsView.pageNearestToCenterOfScreen
-                // 2 tasks either side of the central task
-                val lowerIndex = max(0, centerPageIndex - 2)
-                val upperIndex = centerPageIndex + 2
+                // 2 tasks either side of the central task. MiraCLO: the ColorOS stacked style
+                // shows the edges of more older tasks at once, so load 4 either side there.
+                val range = if (recentsView.isMiraCLOStackActive) 4 else 2
+                val lowerIndex = max(0, centerPageIndex - range)
+                val upperIndex = centerPageIndex + range
 
                 recentsView.children
                     .drop(lowerIndex)

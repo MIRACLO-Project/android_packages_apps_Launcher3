@@ -46,6 +46,17 @@
         android:dependency="pref_icon_pack_same"
         android:persistent="true" />
 
+    <!-- MiraCLO: ColorOS (stacked) or stock recents layout -->
+    <com.android.launcher3.settings.MiraCLOListPreference
+        android:key="pref_recents_style"
+        android:title="@string/miraclo_recents_style_title"
+        android:dialogTitle="@string/miraclo_recents_style_title"
+        android:entries="@array/miraclo_recents_style_entries"
+        android:entryValues="@array/miraclo_recents_style_values"
+        android:defaultValue="coloros"
+        android:persistent="true"
+        launcher:useSimpleSummaryProvider="true" />
+
     <!--
       LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_ENABLED(613)
       LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_DISABLED(614)

@@ -10,4 +10,20 @@
     <string name="miraclo_icon_pack_home_title">Home screen icon pack</string>
     <string name="miraclo_icon_pack_drawer_title">App drawer icon pack</string>
     <string name="miraclo_icon_pack_system">System icons</string>
+
+    <!-- Recents style -->
+    <string name="miraclo_recents_style_title">Recents style</string>
+    <string name="miraclo_recents_style_default">Default</string>
+    <string name="miraclo_recents_style_coloros">ColorOS</string>
+
+    <string-array name="miraclo_recents_style_entries" translatable="false">
+        <item>@string/miraclo_recents_style_coloros</item>
+        <item>@string/miraclo_recents_style_default</item>
+    </string-array>
+
+    <!-- Read by MiraCLORecentsStyle (quickstep) -->
+    <string-array name="miraclo_recents_style_values" translatable="false">
+        <item>coloros</item>
+        <item>default</item>
+    </string-array>
 </resources>

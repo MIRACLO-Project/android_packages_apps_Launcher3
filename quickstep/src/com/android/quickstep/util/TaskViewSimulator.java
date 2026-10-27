@@ -103,6 +103,16 @@ public class TaskViewSimulator implements TransformParams.BuilderProxy {
     public final AnimatedFloat taskGridTranslationX = new AnimatedFloat();
     public final AnimatedFloat taskGridTranslationY = new AnimatedFloat();
 
+    /**
+     * MiraCLO: where the card sits in the ColorOS-style stack (primary-axis shift in px, and
+     * scale). Both fade out with fullScreenProgress, so the app always lands exactly fullscreen.
+     */
+    public final AnimatedFloat miracloStackTranslation = new AnimatedFloat();
+    public final AnimatedFloat miracloStackScale = new AnimatedFloat();
+    {
+        miracloStackScale.value = 1f;
+    }
+
     // Carousel properties
     public final AnimatedFloat carouselScale = new AnimatedFloat();
 
@@ -484,8 +494,16 @@ public class TaskViewSimulator implements TransformParams.BuilderProxy {
             }
         }
 
+        float miracloScale = Utilities.mapRange(fullScreenProgress,
+                miracloStackScale.value > 0f ? miracloStackScale.value : 1f, 1f);
+        if (miracloScale != 1f) {
+            mMatrix.postScale(miracloScale, miracloScale,
+                    mTaskRect.left + (mTaskRect.width() / 2),
+                    mTaskRect.top + (mTaskRect.height() / 2));
+        }
         mOrientationState.getOrientationHandler().setPrimary(mMatrix, MATRIX_POST_TRANSLATE,
-                taskPrimaryTranslation.value);
+                taskPrimaryTranslation.value
+                        + miracloStackTranslation.value * (1f - fullScreenProgress));
         mOrientationState.getOrientationHandler().setSecondary(mMatrix, MATRIX_POST_TRANSLATE,
                 taskSecondaryTranslation.value);
         mMatrix.postTranslate(taskGridTranslationX.value, taskGridTranslationY.value);

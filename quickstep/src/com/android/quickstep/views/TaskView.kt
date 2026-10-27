@@ -414,6 +414,25 @@ constructor(
             applyTranslationX()
         }
 
+    /**
+     * MiraCLO: horizontal shift that tucks older tasks into the ColorOS-style stack. Set by
+     * [RecentsView] on every scroll frame; always 0 in the default recents style.
+     */
+    var miraCLOStackTranslationX = 0f
+        set(value) {
+            if (field == value) return
+            field = value
+            applyTranslationX()
+        }
+
+    /** MiraCLO: scale of a card tucked into the ColorOS-style stack; 1 everywhere else. */
+    var miraCLOStackScale = 1f
+        set(value) {
+            if (field == value) return
+            field = value
+            applyScale()
+        }
+
     private var taskOffsetTranslationY = 0f
         set(value) {
             field = value
@@ -1777,6 +1796,7 @@ constructor(
             persistentScale *
                 dismissScale *
                 animateToIconScale *
+                miraCLOStackScale *
                 Utilities.mapRange(modalness, 1f, modalScale)
         scaleX = scale
         scaleY = scale
@@ -1791,7 +1811,8 @@ constructor(
                 splitSelectTranslationX +
                 gridEndTranslationX +
                 persistentTranslationX +
-                animateToIconTranslationX
+                animateToIconTranslationX +
+                miraCLOStackTranslationX
     }
 
     private fun applyTranslationY() {
@@ -1869,6 +1890,8 @@ constructor(
         // resetViewTransforms is called during QuickSwitch scrolling.
         taskOffsetTranslationX = 0f
         taskResistanceTranslationX = 0f
+        miraCLOStackTranslationX = 0f
+        miraCLOStackScale = 1f
         splitSelectTranslationX = 0f
         gridEndTranslationX = 0f
         taskOffsetTranslationY = 0f

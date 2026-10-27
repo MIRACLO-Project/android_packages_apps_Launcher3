@@ -596,6 +596,17 @@ public abstract class RecentsView<
 
     protected Map<TaskView, Integer> mTaskViewsDismissPrimaryTranslations = new HashMap<>();
 
+    // MiraCLO: ColorOS ("stacked") recents style, see MiraCLORecentsStyle.
+    private boolean mMiraCLOStacked;
+    private final android.content.SharedPreferences.OnSharedPreferenceChangeListener
+            mMiraCLOPrefListener = (prefs, key) -> {
+                if (MiraCLORecentsStyle.KEY_RECENTS_STYLE.equals(key)) {
+                    mMiraCLOStacked = MiraCLORecentsStyle.isStacked(prefs);
+                    updateMiraCLOStack();
+                    invalidate();
+                }
+            };
+
     /**
      * TODO: Call reloadIdNeeded in onTaskStackChanged.
      */
@@ -936,6 +947,106 @@ public abstract class RecentsView<
         mContainer.getViewCache().setCacheSize(R.layout.digital_wellbeing_toast, 5);
 
         mTintingColor = getForegroundScrimDimColor(context);
+
+        android.content.SharedPreferences miracloPrefs =
+                com.android.launcher3.LauncherPrefs.getPrefs(context);
+        mMiraCLOStacked = MiraCLORecentsStyle.isStacked(miracloPrefs);
+        miracloPrefs.registerOnSharedPreferenceChangeListener(mMiraCLOPrefListener);
+        // Older tasks must be drawn under newer ones in the stacked style.
+        setChildrenDrawingOrderEnabled(true);
+    }
+
+    /**
+     * MiraCLO: whether the ColorOS stacked style is in effect right now. Only the phone carousel
+     * in its natural (portrait) orientation is stacked; grid, large screens and rotated recents
+     * keep the stock layout.
+     */
+    public boolean isMiraCLOStackActive() {
+        if (!mMiraCLOStacked || showAsGrid()
+                || mContainer.getDeviceProfile().getDeviceProperties().isLargeScreen()) {
+            return false;
+        }
+        int touch = mOrientationState.getTouchRotation();
+        int layout = mOrientationState.getRecentsActivityRotation();
+        return (touch == android.view.Surface.ROTATION_0
+                        || touch == android.view.Surface.ROTATION_180)
+                && (layout == android.view.Surface.ROTATION_0
+                        || layout == android.view.Surface.ROTATION_180);
+    }
+
+    @Override
+    protected int getChildDrawingOrder(int childCount, int drawingPosition) {
+        // MiraCLO: higher index = older task. Draw older tasks first so they sit under newer ones.
+        return isMiraCLOStackActive() ? childCount - 1 - drawingPosition : drawingPosition;
+    }
+
+    /**
+     * MiraCLO: tucks older tasks into the ColorOS-style stack. The focused task and newer ones
+     * keep their stock place and size, so swipe-up, quick switch and dismiss are unchanged.
+     */
+    private void updateMiraCLOStack() {
+        boolean stacked = isMiraCLOStackActive();
+        int childCount = getChildCount();
+        if (stacked && (mPageScrolls == null || mPageScrolls.length < childCount)) return;
+        int curScroll = getPagedOrientationHandler().getPrimaryScroll(this);
+        for (int i = 0; i < childCount; i++) {
+            if (!(getChildAt(i) instanceof TaskView taskView)
+                    || taskView instanceof DesktopTaskView) {
+                continue;
+            }
+            float translation = 0f;
+            float scale = 1f;
+            int pageSize = taskView.getWidth() + mPageSpacing;
+            if (stacked && pageSize > 0) {
+                int childPosition = mPageScrolls[i] + Math.round(
+                        taskView.getPrimaryDismissTranslationProperty().get(taskView));
+                float pagesFromCentre = (childPosition - curScroll) / (float) pageSize;
+                // Pages left of centre (in RTL recents, the phone default) are older tasks.
+                float depth = mIsRtl ? -pagesFromCentre : pagesFromCentre;
+                if (depth > 0f) {
+                    float towardsFocus = MiraCLORecentsStyle.translationTowardsFocus(
+                            depth, taskView.getWidth(), pageSize);
+                    translation = mIsRtl ? towardsFocus : -towardsFocus;
+                    scale = MiraCLORecentsStyle.scale(depth);
+                }
+            }
+            taskView.setMiraCLOStackTranslationX(translation);
+            taskView.setMiraCLOStackScale(scale);
+            if (mRemoteTargetHandles == null) continue;
+            // Keep the live tile in the stack with its card.
+            for (RemoteTargetHandle rth : mRemoteTargetHandles) {
+                RemoteAnimationTargets targets = rth.getTransformParams().getTargetSet();
+                for (int id : taskView.getTaskIds()) {
+                    if (targets != null && targets.findTask(id) != null) {
+                        rth.getTaskViewSimulator().miracloStackTranslation.value = translation;
+                        rth.getTaskViewSimulator().miracloStackScale.value = scale;
+                    }
+                }
+            }
+        }
+    }
+
+    private TaskView findMiraCLOTaskView(RemoteTargetHandle rth) {
+        RemoteAnimationTargets targets = rth.getTransformParams().getTargetSet();
+        if (targets == null) return null;
+        for (TaskView tv : getTaskViews()) {
+            for (int id : tv.getTaskIds()) {
+                if (targets.findTask(id) != null) return tv;
+            }
+        }
+        return null;
+    }
+
+    /** MiraCLO: stack shift of the task [rth] animates, so launches start from its card. */
+    public float getMiraCLOStackTranslation(RemoteTargetHandle rth) {
+        TaskView tv = findMiraCLOTaskView(rth);
+        return tv != null ? tv.getMiraCLOStackTranslationX() : 0f;
+    }
+
+    /** MiraCLO: stack scale of the task [rth] animates. */
+    public float getMiraCLOStackScale(RemoteTargetHandle rth) {
+        TaskView tv = findMiraCLOTaskView(rth);
+        return tv != null ? tv.getMiraCLOStackScale() : 1f;
     }
 
     protected abstract void initialiseInjectables();
@@ -3861,6 +3972,7 @@ public abstract class RecentsView<
         setImportantForAccessibility(isModal() ? IMPORTANT_FOR_ACCESSIBILITY_NO
                 : IMPORTANT_FOR_ACCESSIBILITY_AUTO);
         recalculateTaskViewScreenEdgeIntersections();
+        updateMiraCLOStack();
     }
 
     private void updatePivots() {
@@ -5738,6 +5850,7 @@ public abstract class RecentsView<
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         dispatchScrollChanged();
+        updateMiraCLOStack();
     }
 
     /**
