@@ -24,6 +24,28 @@
         android:persistent="false"
         android:widgetLayout="@layout/notification_pref_warning" />
 
+    <!-- MiraCLO: icon packs, one for the home screen and one for the app drawer -->
+    <SwitchPreference
+        android:key="pref_icon_pack_same"
+        android:title="@string/miraclo_icon_pack_same_title"
+        android:summary="@string/miraclo_icon_pack_same_summary"
+        android:disableDependentsState="true"
+        android:defaultValue="true"
+        android:persistent="true" />
+
+    <com.android.launcher3.settings.MiraCLOIconPackPreference
+        android:key="pref_icon_pack_home"
+        android:title="@string/miraclo_icon_pack_home_title"
+        android:dialogTitle="@string/miraclo_icon_pack_home_title"
+        android:persistent="true" />
+
+    <com.android.launcher3.settings.MiraCLOIconPackPreference
+        android:key="pref_icon_pack_drawer"
+        android:title="@string/miraclo_icon_pack_drawer_title"
+        android:dialogTitle="@string/miraclo_icon_pack_drawer_title"
+        android:dependency="pref_icon_pack_same"
+        android:persistent="true" />
+
     <!--
       LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_ENABLED(613)
       LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_DISABLED(614)

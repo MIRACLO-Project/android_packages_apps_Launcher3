@@ -631,8 +631,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     private void setStandardIcon(ItemInfoWithIcon info) {
-        FastBitmapDrawable iconDrawable =
-                info.newIcon(getContext(), getIconCreationFlagsForInfo(info));
+        FastBitmapDrawable packIcon =
+                com.android.launcher3.icons.MiraCLOIconPacks.iconFor(getContext(), info, mDisplay);
+        FastBitmapDrawable iconDrawable = packIcon != null ? packIcon
+                : info.newIcon(getContext(), getIconCreationFlagsForInfo(info));
         if (mIsShowingMinimalPopup) {
             iconDrawable.setAnimationEnabled(false);
         }

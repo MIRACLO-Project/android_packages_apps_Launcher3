@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: MiraCLO
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Icon packs -->
+    <string name="miraclo_icon_pack_same_title">Same icon pack everywhere</string>
+    <string name="miraclo_icon_pack_same_summary">Use the home screen pack in the app drawer too</string>
+    <string name="miraclo_icon_pack_home_title">Home screen icon pack</string>
+    <string name="miraclo_icon_pack_drawer_title">App drawer icon pack</string>
+    <string name="miraclo_icon_pack_system">System icons</string>
+</resources>

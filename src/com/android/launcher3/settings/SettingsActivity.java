@@ -27,6 +27,7 @@ import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,10 +54,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.display.LauncherDisplayInfo;
+import com.android.launcher3.icons.MiraCLOIconPacks;
 import com.android.launcher3.util.SafeCloseable;
 import com.android.launcher3.util.SettingsCache;
 
@@ -119,7 +123,29 @@ public class SettingsActivity extends FragmentActivity
             // Display the fragment as the main content.
             fm.beginTransaction().replace(R.id.content_frame, f).commit();
         }
+
+        LauncherPrefs.getPrefs(getApplicationContext())
+                .registerOnSharedPreferenceChangeListener(mIconPackListener);
     }
+
+    @Override
+    protected void onDestroy() {
+        LauncherPrefs.getPrefs(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(mIconPackListener);
+        super.onDestroy();
+    }
+
+    /** MiraCLO: reloads every icon when an icon pack setting changes. */
+    private final SharedPreferences.OnSharedPreferenceChangeListener mIconPackListener =
+            (prefs, key) -> {
+                if (MiraCLOIconPacks.KEY_SAME.equals(key)
+                        || MiraCLOIconPacks.KEY_HOME.equals(key)
+                        || MiraCLOIconPacks.KEY_DRAWER.equals(key)) {
+                    MiraCLOIconPacks.clear();
+                    LauncherAppState.getInstance(this).getModel()
+                            .forceReload("icon_pack_changed");
+                }
+            };
 
     private boolean startPreference(String fragment, Bundle args, String key) {
         if (getSupportFragmentManager().isStateSaved()) {
