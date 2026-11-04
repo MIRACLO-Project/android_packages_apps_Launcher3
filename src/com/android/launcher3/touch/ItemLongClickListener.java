@@ -67,7 +67,7 @@ public class ItemLongClickListener {
         }
         if (!(v.getTag() instanceof ItemInfo)) return false;
 
-        // MiraCLO: with the home screen layout locked, a long press only shows the menu
+        // MIRACLO: with the home screen layout locked, a long press only shows the menu
         if (com.android.launcher3.miraclo.MiraCLOLauncher.layoutLocked(launcher)) {
             return com.android.launcher3.miraclo.MiraCLOLauncher.onLockedLongPress(v, launcher);
         }

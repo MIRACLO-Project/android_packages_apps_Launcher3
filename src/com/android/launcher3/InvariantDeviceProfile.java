@@ -268,7 +268,7 @@ public class InvariantDeviceProfile {
         mThemeManager = themeManager;
         mMainExecutor = mainExecutor;
 
-        // MiraCLO: icon size and the room under the dock follow Mira Studio > Home.
+        // MIRACLO: icon size and the room under the dock follow Mira Studio > Home.
         com.android.launcher3.miraclo.MiraCLOHomeSearch.init(context);
         com.android.launcher3.miraclo.MiraCLOHomeSearch.setOnLayoutChanged(
                 () -> mMainExecutor.execute(this::onConfigChanged));

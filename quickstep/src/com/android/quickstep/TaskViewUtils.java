@@ -860,7 +860,7 @@ public final class TaskViewUtils {
 
             tvsLocal.fullScreenProgress.value = 0;
             tvsLocal.recentsViewScale.value = 1;
-            // MiraCLO: start from the card's place in the ColorOS-style stack.
+            // MIRACLO: start from the card's place in the ColorOS-style stack.
             tvsLocal.miracloStackTranslation.value =
                     recentsView.getMiraCLOStackTranslation(handle);
             tvsLocal.miracloStackScale.value = recentsView.getMiraCLOStackScale(handle);

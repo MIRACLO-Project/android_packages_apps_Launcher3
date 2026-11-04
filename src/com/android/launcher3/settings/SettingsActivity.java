@@ -135,7 +135,7 @@ public class SettingsActivity extends FragmentActivity
         super.onDestroy();
     }
 
-    /** MiraCLO: reloads every icon when an icon pack setting changes. */
+    /** MIRACLO: reloads every icon when an icon pack setting changes. */
     private final SharedPreferences.OnSharedPreferenceChangeListener mIconPackListener =
             (prefs, key) -> {
                 if (MiraCLOIconPacks.KEY_SAME.equals(key)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2026 MiraCLO
+ * Copyright (C) 2026 MIRACLO
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MiraCLO icon packs (Launcher settings > Icon packs). Works with any icon pack that ships an
+ * MIRACLO icon packs (Launcher settings > Icon packs). Works with any icon pack that ships an
  * appfilter (ADW / Nova / Lawnchair format). The home screen and the app drawer can use
  * different packs. Icons the pack covers are taken from it; calendar icons follow the date.
  * Apps the pack does not cover keep their normal icon.

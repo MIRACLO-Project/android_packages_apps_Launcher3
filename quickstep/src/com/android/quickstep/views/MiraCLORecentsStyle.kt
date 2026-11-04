@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -10,7 +10,7 @@ import kotlin.math.min
 import kotlin.math.pow
 
 /**
- * MiraCLO: the ColorOS ("stacked") recents style.
+ * MIRACLO: the ColorOS ("stacked") recents style.
  *
  * The focused task keeps its normal place and size, so the swipe-up and quick-switch animations
  * are untouched. Older tasks are tucked behind it: each one only shows a strip of its edge, the

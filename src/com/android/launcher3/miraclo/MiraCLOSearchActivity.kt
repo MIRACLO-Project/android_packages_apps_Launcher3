@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -40,7 +40,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 
 /**
- * MiraCLO global search, opened from the home search pill or bar (or a swipe down on the home
+ * MIRACLO global search, opened from the home search pill or bar (or a swipe down on the home
  * screen): one search across apps, contacts, settings, files, messages and the web, each of which
  * can be turned off in Mira Studio.
  */

@@ -206,7 +206,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         mLongPressState = STATE_CANCELLED;
     }
 
-    // MiraCLO: double tap on empty home screen space (Mira Studio > Launcher > Gestures)
+    // MIRACLO: double tap on empty home screen space (Mira Studio > Launcher > Gestures)
     @Override
     public boolean onDoubleTap(MotionEvent event) {
         if (com.android.launcher3.miraclo.MiraCLOLauncher.onDoubleTap(mLauncher)) {

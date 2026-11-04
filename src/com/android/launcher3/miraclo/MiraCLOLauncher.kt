@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -26,7 +26,7 @@ import com.android.launcher3.util.TouchController
 import kotlin.math.abs
 
 /**
- * MiraCLO launcher features (Mira Studio › Home screen › Launcher), stored in Settings.Secure so
+ * MIRACLO launcher features (Mira Studio › Home screen › Launcher), stored in Settings.Secure so
  * Settings can change them:
  * - miraclo_home_labels: 1 = names under home screen icons (default), 0 = icons only
  * - miraclo_page_transition: 0 slide (default), 1 cube, 2 depth, 3 fade
@@ -107,7 +107,7 @@ object MiraCLOLauncher {
                     if (oldLabels != labels || oldHidden != hidden) {
                         // Rebind the home screen and the app drawer with the new labels / apps.
                         runCatching {
-                            LauncherAppState.getInstance(app).model.forceReload("MiraCLO launcher")
+                            LauncherAppState.getInstance(app).model.forceReload("MIRACLO launcher")
                         }
                     }
                 }

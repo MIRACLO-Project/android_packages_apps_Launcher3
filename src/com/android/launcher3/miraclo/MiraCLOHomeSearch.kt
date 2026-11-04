@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,7 +13,7 @@ import android.os.Looper
 import android.provider.Settings
 
 /**
- * MiraCLO home search (Mira Studio > Home screen & icons > Home search), stored in
+ * MIRACLO home search (Mira Studio > Home screen & icons > Home search), stored in
  * Settings.Secure so Settings can change it:
  * - miraclo_home_search: 0 off, 1 small pill above the dock, 2 search bar below the dock
  * - miraclo_home_search_scopes: what to search ("apps,contacts,settings,files,messages,web")
@@ -101,7 +101,7 @@ object MiraCLOHomeSearch {
                         // Rebind every icon so the drawer picks up (or drops) themed icons.
                         runCatching {
                             com.android.launcher3.LauncherAppState.getInstance(app).model
-                                .forceReload("MiraCLO icon settings")
+                                .forceReload("MIRACLO icon settings")
                         }
                     }
                 }

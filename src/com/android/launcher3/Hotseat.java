@@ -281,7 +281,7 @@ public class Hotseat extends CellLayout implements Insettable {
                 lp.width = grid.getHotseatProfile().getBarSizePx() + insets.right;
             }
         } else {
-            // MiraCLO: the stock search widget only shows where our bar reserves room for it.
+            // MIRACLO: the stock search widget only shows where our bar reserves room for it.
             mQsb.setVisibility(com.android.launcher3.miraclo.MiraCLOHomeSearch.barBelowDock()
                     ? View.VISIBLE : View.GONE);
             lp.gravity = Gravity.BOTTOM;

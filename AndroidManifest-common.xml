@@ -56,7 +56,7 @@
 
     <uses-permission android:name="${applicationId}.permission.GRID_CONTROL" />
 
-    <!-- MiraCLO home search: contacts, files and messages results -->
+    <!-- MIRACLO home search: contacts, files and messages results -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
@@ -143,7 +143,7 @@
         <!--
         The settings activity. To extend point settings_fragment_name to appropriate fragment class
         -->
-        <!-- MiraCLO: global search from the home screen -->
+        <!-- MIRACLO: global search from the home screen -->
         <activity
             android:name="com.android.launcher3.miraclo.MiraCLOSearchActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

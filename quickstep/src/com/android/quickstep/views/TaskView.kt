@@ -415,7 +415,7 @@ constructor(
         }
 
     /**
-     * MiraCLO: horizontal shift that tucks older tasks into the ColorOS-style stack. Set by
+     * MIRACLO: horizontal shift that tucks older tasks into the ColorOS-style stack. Set by
      * [RecentsView] on every scroll frame; always 0 in the default recents style.
      */
     var miraCLOStackTranslationX = 0f
@@ -425,7 +425,7 @@ constructor(
             applyTranslationX()
         }
 
-    /** MiraCLO: scale of a card tucked into the ColorOS-style stack; 1 everywhere else. */
+    /** MIRACLO: scale of a card tucked into the ColorOS-style stack; 1 everywhere else. */
     var miraCLOStackScale = 1f
         set(value) {
             if (field == value) return

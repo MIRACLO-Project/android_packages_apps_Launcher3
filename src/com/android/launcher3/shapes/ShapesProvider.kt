@@ -57,8 +57,8 @@ object ShapesProvider {
     const val SEVEN_SIDED_COOKIE_KEY = "seven_sided_cookie"
     const val ARCH_KEY = "arch"
 
-    // MiraCLO: every shape is always offered (Mira Studio > Home screen & icons), including
-    // MiraCLO's own shapes, each drawn from a formula.
+    // MIRACLO: every shape is always offered (Mira Studio > Home screen & icons), including
+    // MIRACLO's own shapes, each drawn from a formula.
     val iconShapes: Array<IconShapeModel> =
         if (true) {
             arrayOf(

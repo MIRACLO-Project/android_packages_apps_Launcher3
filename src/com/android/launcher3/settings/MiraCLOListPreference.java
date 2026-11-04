@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 

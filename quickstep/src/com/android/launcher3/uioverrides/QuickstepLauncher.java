@@ -734,7 +734,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
 
         ArrayList<TouchController> list = new ArrayList<>();
         list.add(getDragController());
-        // MiraCLO: swipe up can open search instead of the app drawer
+        // MIRACLO: swipe up can open search instead of the app drawer
         list.add(new com.android.launcher3.miraclo.MiraCLOLauncher.SwipeUpController(this));
         BiConsumer<AnimatorSet, Long> splitAnimator = (animatorSet, duration) ->
                 animatorSet.play(mSplitSelectStateController.getSplitAnimationController()

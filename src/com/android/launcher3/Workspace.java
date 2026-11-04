@@ -1559,7 +1559,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         }
     }
 
-    // MiraCLO: page transitions (Mira Studio > Launcher). Pages are flat while the workspace
+    // MIRACLO: page transitions (Mira Studio > Launcher). Pages are flat while the workspace
     // changes state, is dragged on or is in a modal state.
     private void updateMiraPageTransforms() {
         boolean active = !workspaceInModalState() && !mIsSwitchingState

@@ -63,7 +63,7 @@ public class StatusBarTouchController implements TouchController {
     private final Supplier<Boolean> mIsEnabledCheck;
     private final CachedEventDispatcher mEventDispatcher = new CachedEventDispatcher();
 
-    /** MiraCLO: moves a home screen swipe to the notifications (left) or QS (right) side. */
+    /** MIRACLO: moves a home screen swipe to the notifications (left) or QS (right) side. */
     private float mMiraOffsetX = 0f;
 
     /* If {@code false}, this controller should not handle the input {@link MotionEvent}.*/
@@ -116,7 +116,7 @@ public class StatusBarTouchController implements TouchController {
             float dy = ev.getY() - mDownEvent.y;
             float dx = ev.getX() - mDownEvent.x;
             if (dy > mTouchSlop && dy > Math.abs(dx)) {
-                // MiraCLO: a swipe down from the middle of the home screen can open search or
+                // MIRACLO: a swipe down from the middle of the home screen can open search or
                 // Quick Settings (Mira Studio > Launcher > Gestures); from the top edge it
                 // still opens the notification shade.
                 int miraSwipe = com.android.launcher3.miraclo.MiraCLOLauncher.swipeDownAction(mLauncher.asContext());

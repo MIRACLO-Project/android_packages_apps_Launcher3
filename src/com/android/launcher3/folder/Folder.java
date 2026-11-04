@@ -754,7 +754,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         }
         Folder openFolder = getOpen(mActivityContext);
         closeOpenFolder(openFolder);
-        // MiraCLO: blur the wallpaper behind the open folder
+        // MIRACLO: blur the wallpaper behind the open folder
         com.android.launcher3.miraclo.MiraCLOLauncher.folderBlur(mLauncherDelegate.getLauncher(), true);
 
         if (blurOnMoreSurfaces()) {

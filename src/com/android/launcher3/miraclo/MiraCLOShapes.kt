@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: MiraCLO
+ * SPDX-FileCopyrightText: MIRACLO
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -62,7 +62,7 @@ object MiraCLOShapes {
                     override fun onChange(selfChange: Boolean) {
                         // Rebind the app drawer so every icon takes the new shape.
                         runCatching {
-                            LauncherAppState.getInstance(app).model.forceReload("MiraCLO drawer shape")
+                            LauncherAppState.getInstance(app).model.forceReload("MIRACLO drawer shape")
                         }
                     }
                 },

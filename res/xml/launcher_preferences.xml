@@ -24,7 +24,7 @@
         android:persistent="false"
         android:widgetLayout="@layout/notification_pref_warning" />
 
-    <!-- MiraCLO: icon packs, one for the home screen and one for the app drawer -->
+    <!-- MIRACLO: icon packs, one for the home screen and one for the app drawer -->
     <SwitchPreference
         android:key="pref_icon_pack_same"
         android:title="@string/miraclo_icon_pack_same_title"
@@ -46,7 +46,7 @@
         android:dependency="pref_icon_pack_same"
         android:persistent="true" />
 
-    <!-- MiraCLO: ColorOS (stacked) or stock recents layout -->
+    <!-- MIRACLO: ColorOS (stacked) or stock recents layout -->
     <com.android.launcher3.settings.MiraCLOListPreference
         android:key="pref_recents_style"
         android:title="@string/miraclo_recents_style_title"

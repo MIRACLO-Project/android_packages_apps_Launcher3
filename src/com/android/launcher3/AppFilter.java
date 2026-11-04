@@ -29,7 +29,7 @@ public class AppFilter {
     }
 
     public boolean shouldShowApp(ComponentName app) {
-        // MiraCLO: apps hidden in Mira Studio stay out of the app drawer and search
+        // MIRACLO: apps hidden in Mira Studio stay out of the app drawer and search
         return !mFilteredComponents.contains(app)
                 && !com.android.launcher3.miraclo.MiraCLOLauncher.isHidden(mMiraContext, app.getPackageName());
     }

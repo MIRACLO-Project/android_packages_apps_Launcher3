@@ -104,7 +104,7 @@ public class TaskViewSimulator implements TransformParams.BuilderProxy {
     public final AnimatedFloat taskGridTranslationY = new AnimatedFloat();
 
     /**
-     * MiraCLO: where the card sits in the ColorOS-style stack (primary-axis shift in px, and
+     * MIRACLO: where the card sits in the ColorOS-style stack (primary-axis shift in px, and
      * scale). Both fade out with fullScreenProgress, so the app always lands exactly fullscreen.
      */
     public final AnimatedFloat miracloStackTranslation = new AnimatedFloat();

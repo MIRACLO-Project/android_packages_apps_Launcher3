@@ -630,7 +630,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         }
     }
 
-    /** MiraCLO: the app drawer can have its own icon shape (Mira Studio, App drawer tab). */
+    /** MIRACLO: the app drawer can have its own icon shape (Mira Studio, App drawer tab). */
     private FastBitmapDrawable miraNewIcon(ItemInfoWithIcon info) {
         int flags = getIconCreationFlagsForInfo(info);
         boolean drawer = mDisplay == DISPLAY_ALL_APPS || mDisplay == DISPLAY_PREDICTION_ROW
@@ -708,7 +708,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     protected boolean shouldUseTheme() {
-        // MiraCLO: themed icons can cover the app drawer too (Mira Studio > Home screen & icons).
+        // MIRACLO: themed icons can cover the app drawer too (Mira Studio > Home screen & icons).
         if (mDisplay == DISPLAY_ALL_APPS || mDisplay == DISPLAY_PREDICTION_ROW
                 || mDisplay == DISPLAY_SEARCH_RESULT) {
             return com.android.launcher3.miraclo.MiraCLOHomeSearch.themedIconsInDrawer(

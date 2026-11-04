@@ -773,7 +773,7 @@ public class CellLayout extends ViewGroup {
         // Hotseat icons - remove text
         if (child instanceof BubbleTextView) {
             BubbleTextView bubbleChild = (BubbleTextView) child;
-            // MiraCLO: home screen labels can be turned off (folders keep theirs)
+            // MIRACLO: home screen labels can be turned off (folders keep theirs)
             bubbleChild.setContainerTextVisibility(mContainerType != HOTSEAT
                     && (mContainerType != WORKSPACE
                             || com.android.launcher3.miraclo.MiraCLOLauncher.homeLabels(getContext())));

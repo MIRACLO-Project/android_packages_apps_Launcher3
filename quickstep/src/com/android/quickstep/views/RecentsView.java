@@ -596,7 +596,7 @@ public abstract class RecentsView<
 
     protected Map<TaskView, Integer> mTaskViewsDismissPrimaryTranslations = new HashMap<>();
 
-    // MiraCLO: ColorOS ("stacked") recents style, see MiraCLORecentsStyle.
+    // MIRACLO: ColorOS ("stacked") recents style, see MiraCLORecentsStyle.
     private boolean mMiraCLOStacked;
     private final android.content.SharedPreferences.OnSharedPreferenceChangeListener
             mMiraCLOPrefListener = (prefs, key) -> {
@@ -957,7 +957,7 @@ public abstract class RecentsView<
     }
 
     /**
-     * MiraCLO: whether the ColorOS stacked style is in effect right now. Only the phone carousel
+     * MIRACLO: whether the ColorOS stacked style is in effect right now. Only the phone carousel
      * in its natural (portrait) orientation is stacked; grid, large screens and rotated recents
      * keep the stock layout.
      */
@@ -976,12 +976,12 @@ public abstract class RecentsView<
 
     @Override
     protected int getChildDrawingOrder(int childCount, int drawingPosition) {
-        // MiraCLO: higher index = older task. Draw older tasks first so they sit under newer ones.
+        // MIRACLO: higher index = older task. Draw older tasks first so they sit under newer ones.
         return isMiraCLOStackActive() ? childCount - 1 - drawingPosition : drawingPosition;
     }
 
     /**
-     * MiraCLO: tucks older tasks into the ColorOS-style stack. The focused task and newer ones
+     * MIRACLO: tucks older tasks into the ColorOS-style stack. The focused task and newer ones
      * keep their stock place and size, so swipe-up, quick switch and dismiss are unchanged.
      */
     private void updateMiraCLOStack() {
@@ -1037,13 +1037,13 @@ public abstract class RecentsView<
         return null;
     }
 
-    /** MiraCLO: stack shift of the task [rth] animates, so launches start from its card. */
+    /** MIRACLO: stack shift of the task [rth] animates, so launches start from its card. */
     public float getMiraCLOStackTranslation(RemoteTargetHandle rth) {
         TaskView tv = findMiraCLOTaskView(rth);
         return tv != null ? tv.getMiraCLOStackTranslationX() : 0f;
     }
 
-    /** MiraCLO: stack scale of the task [rth] animates. */
+    /** MIRACLO: stack scale of the task [rth] animates. */
     public float getMiraCLOStackScale(RemoteTargetHandle rth) {
         TaskView tv = findMiraCLOTaskView(rth);
         return tv != null ? tv.getMiraCLOStackScale() : 1f;
