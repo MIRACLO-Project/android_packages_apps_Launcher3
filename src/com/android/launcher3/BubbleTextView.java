@@ -630,11 +630,31 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         }
     }
 
+    /** MiraCLO: the app drawer can have its own icon shape (Mira Studio, App drawer tab). */
+    private FastBitmapDrawable miraNewIcon(ItemInfoWithIcon info) {
+        int flags = getIconCreationFlagsForInfo(info);
+        boolean drawer = mDisplay == DISPLAY_ALL_APPS || mDisplay == DISPLAY_PREDICTION_ROW
+                || mDisplay == DISPLAY_SEARCH_RESULT || mDisplay == DISPLAY_SEARCH_RESULT_SMALL
+                || mDisplay == DISPLAY_SEARCH_RESULT_APP_ROW;
+        if (drawer && info.supportsCustomShapes(flags)) {
+            com.android.launcher3.icons.IconShape shape =
+                    com.android.launcher3.miraclo.MiraCLOShapes.drawerShape(getContext());
+            if (shape != null) {
+                if (!ThemeManager.INSTANCE.get(getContext()).isIconThemeEnabled()) {
+                    flags &= ~FLAG_THEMED;
+                }
+                FastBitmapDrawable d = info.bitmap.newIcon(getContext(), flags, shape);
+                d.setDisabled(info.isDisabled());
+                return d;
+            }
+        }
+        return info.newIcon(getContext(), flags);
+    }
+
     private void setStandardIcon(ItemInfoWithIcon info) {
         FastBitmapDrawable packIcon =
                 com.android.launcher3.icons.MiraCLOIconPacks.iconFor(getContext(), info, mDisplay);
-        FastBitmapDrawable iconDrawable = packIcon != null ? packIcon
-                : info.newIcon(getContext(), getIconCreationFlagsForInfo(info));
+        FastBitmapDrawable iconDrawable = packIcon != null ? packIcon : miraNewIcon(info);
         if (mIsShowingMinimalPopup) {
             iconDrawable.setAnimationEnabled(false);
         }
@@ -688,6 +708,12 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     protected boolean shouldUseTheme() {
+        // MiraCLO: themed icons can cover the app drawer too (Mira Studio > Home screen & icons).
+        if (mDisplay == DISPLAY_ALL_APPS || mDisplay == DISPLAY_PREDICTION_ROW
+                || mDisplay == DISPLAY_SEARCH_RESULT) {
+            return com.android.launcher3.miraclo.MiraCLOHomeSearch.themedIconsInDrawer(
+                    getContext());
+        }
         return mDisplay == DISPLAY_WORKSPACE || mDisplay == DISPLAY_FOLDER
                 || mDisplay == DISPLAY_TASKBAR;
     }

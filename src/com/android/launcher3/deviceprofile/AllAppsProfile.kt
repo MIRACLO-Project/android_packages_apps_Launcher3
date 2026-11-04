@@ -298,7 +298,9 @@ data class AllAppsProfile(
             displayOptionSpec: DisplayOptionSpec,
             allAppsTopPadding: Int,
         ): AllAppsProfile {
-            var allAppsIconSizePx = responsiveAllAppsCellSpec.iconSize
+            var allAppsIconSizePx =
+                com.android.launcher3.miraclo.MiraCLOHomeSearch.scaled(
+                    responsiveAllAppsCellSpec.iconSize)
             var allAppsIconTextSizePx: Float = responsiveAllAppsCellSpec.iconTextSize.toFloat()
             var allAppsIconDrawablePaddingPx =
                 getNormalizedIconDrawablePadding(

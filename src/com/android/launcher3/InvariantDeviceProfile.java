@@ -268,6 +268,11 @@ public class InvariantDeviceProfile {
         mThemeManager = themeManager;
         mMainExecutor = mainExecutor;
 
+        // MiraCLO: icon size and the room under the dock follow Mira Studio > Home.
+        com.android.launcher3.miraclo.MiraCLOHomeSearch.init(context);
+        com.android.launcher3.miraclo.MiraCLOHomeSearch.setOnLayoutChanged(
+                () -> mMainExecutor.execute(this::onConfigChanged));
+
         String gridName = prefs.get(GRID_NAME);
         initGrid(gridName);
         mThemeManager.generateIconShape(iconBitmapSize);
@@ -413,7 +418,7 @@ public class InvariantDeviceProfile {
 
         inlineNavButtonsEndSpacing = closestProfile.inlineNavButtonsEndSpacing;
 
-        iconSize = displayOption.iconSizes;
+        iconSize = com.android.launcher3.miraclo.MiraCLOHomeSearch.scaled(displayOption.iconSizes);
         float maxIconSize = iconSize[0];
         for (int i = 1; i < iconSize.length; i++) {
             maxIconSize = Math.max(maxIconSize, iconSize[i]);
@@ -446,7 +451,8 @@ public class InvariantDeviceProfile {
 
         allAppsCellSize = displayOption.allAppsCellSize;
         allAppsBorderSpaces = displayOption.allAppsBorderSpaces;
-        allAppsIconSize = displayOption.allAppsIconSizes;
+        allAppsIconSize =
+                com.android.launcher3.miraclo.MiraCLOHomeSearch.scaled(displayOption.allAppsIconSizes);
         allAppsIconTextSize = displayOption.allAppsIconTextSizes;
 
         inlineQsb = closestProfile.inlineQsb;

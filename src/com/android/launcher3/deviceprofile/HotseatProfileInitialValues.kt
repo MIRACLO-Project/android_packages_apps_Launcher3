@@ -74,6 +74,9 @@ data class HotseatProfileInitialValues(
                 return (hotseatIconSizePx + barEdgePaddingPx + barWorkspaceSpacePx)
             } else if (isQsbInline) {
                 return (max(hotseatIconSizePx, qsbVisualHeight) + barBottomSpacePx)
+            } else if (!com.android.launcher3.miraclo.MiraCLOHomeSearch.barBelowDock()) {
+                // MiraCLO: no search bar under the dock, so no empty gap for one.
+                return (hotseatIconSizePx + barBottomSpacePx)
             } else {
                 return (hotseatIconSizePx + qsbSpace + qsbVisualHeight + barBottomSpacePx)
             }

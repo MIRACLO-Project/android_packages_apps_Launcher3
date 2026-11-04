@@ -56,6 +56,13 @@
 
     <uses-permission android:name="${applicationId}.permission.GRID_CONTROL" />
 
+    <!-- MiraCLO home search: contacts, files and messages results -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:backupAgent="com.android.launcher3.LauncherBackupAgent"
         android:name="com.android.launcher3.LauncherApplication"
@@ -136,6 +143,16 @@
         <!--
         The settings activity. To extend point settings_fragment_name to appropriate fragment class
         -->
+        <!-- MiraCLO: global search from the home screen -->
+        <activity
+            android:name="com.android.launcher3.miraclo.MiraCLOSearchActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:taskAffinity=""
+            android:exported="false" />
+
         <activity
             android:name="com.android.launcher3.settings.SettingsActivity"
             android:label="@string/settings_button_text"

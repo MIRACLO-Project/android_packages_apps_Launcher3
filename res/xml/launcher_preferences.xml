@@ -53,7 +53,7 @@
         android:dialogTitle="@string/miraclo_recents_style_title"
         android:entries="@array/miraclo_recents_style_entries"
         android:entryValues="@array/miraclo_recents_style_values"
-        android:defaultValue="coloros"
+        android:defaultValue="default"
         android:persistent="true"
         launcher:useSimpleSummaryProvider="true" />
 

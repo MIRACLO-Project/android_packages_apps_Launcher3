@@ -281,7 +281,9 @@ public class Hotseat extends CellLayout implements Insettable {
                 lp.width = grid.getHotseatProfile().getBarSizePx() + insets.right;
             }
         } else {
-            mQsb.setVisibility(View.VISIBLE);
+            // MiraCLO: the stock search widget only shows where our bar reserves room for it.
+            mQsb.setVisibility(com.android.launcher3.miraclo.MiraCLOHomeSearch.barBelowDock()
+                    ? View.VISIBLE : View.GONE);
             lp.gravity = Gravity.BOTTOM;
             lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -289,7 +291,9 @@ public class Hotseat extends CellLayout implements Insettable {
             // space in its parent (hotseat). If hotseatBarSizePx is less than that, we let it go
             // beyond and offset the content accordingly.
             int totalHeightForQsb = grid.getQsbOffsetY() + grid.getHotseatProfile().getQsbHeight();
-            topOverlap = Math.max(0, totalHeightForQsb - grid.getHotseatProfile().getBarSizePx());
+            topOverlap = com.android.launcher3.miraclo.MiraCLOHomeSearch.barBelowDock()
+                    ? Math.max(0, totalHeightForQsb - grid.getHotseatProfile().getBarSizePx())
+                    : 0;
             lp.height = grid.getHotseatProfile().getBarSizePx() + topOverlap;
         }
 

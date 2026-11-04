@@ -422,6 +422,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         // Disable multitouch across the workspace/all apps/customize tray
         setMotionEventSplittingEnabled(true);
         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
+        com.android.launcher3.miraclo.MiraCLOLauncher.setOnTransitionChanged(this::updateMiraPageTransforms);
         mStatsLogManager = StatsLogManager.newInstance(context);
         mMSDLPlayerWrapper = MSDLPlayerWrapper.INSTANCE.get(context);
     }
@@ -1424,6 +1425,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
         updatePageAlphaValues();
         updatePageScrollValues();
+        updateMiraPageTransforms();
         enableHwLayersOnVisiblePages();
     }
 
@@ -1553,6 +1555,22 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
                                         : IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
                     }
                 }
+            }
+        }
+    }
+
+    // MiraCLO: page transitions (Mira Studio > Launcher). Pages are flat while the workspace
+    // changes state, is dragged on or is in a modal state.
+    private void updateMiraPageTransforms() {
+        boolean active = !workspaceInModalState() && !mIsSwitchingState
+                && (mDragController == null || !mDragController.isDragging());
+        int screenCenter = getScrollX() + getMeasuredWidth() / 2;
+        int distance = getChildCount() > 1
+                ? Math.abs(getScrollForPage(1) - getScrollForPage(0)) : getMeasuredWidth();
+        for (int i = 0; i < getChildCount(); i++) {
+            if (getChildAt(i) instanceof CellLayout cl) {
+                com.android.launcher3.miraclo.MiraCLOLauncher.applyPageTransition(cl.getShortcutsAndWidgets(),
+                        active ? getScrollProgress(screenCenter, cl, i) : 0f, distance);
             }
         }
     }
@@ -1688,6 +1706,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
     private void onStartStateTransition() {
         mIsSwitchingState = true;
+        updateMiraPageTransforms();
         mTransitionProgress = 0;
 
         updateChildrenLayersEnabled();

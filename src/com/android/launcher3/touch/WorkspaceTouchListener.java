@@ -77,6 +77,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
     private int mLongPressState = STATE_CANCELLED;
 
     private final GestureDetector mGestureDetector;
+    private final com.android.launcher3.miraclo.MiraCLOLauncher.Pinch mMiraPinch;
     private final BoxSelectionHelper mBoxSelectionHelper;
 
     public WorkspaceTouchListener(Launcher launcher, Workspace<?> workspace) {
@@ -86,6 +87,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         // likely to cause movement.
         mTouchSlop = 2 * ViewConfiguration.get(launcher).getScaledTouchSlop();
         mGestureDetector = new GestureDetector(workspace.getContext(), this);
+        mMiraPinch = new com.android.launcher3.miraclo.MiraCLOLauncher.Pinch(launcher);
         mBoxSelectionHelper = enableWorkspaceSelection()
                 ? new BoxSelectionHelper(launcher, workspace)
                 : null;
@@ -99,6 +101,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         }
 
         mGestureDetector.onTouchEvent(ev);
+        mMiraPinch.onTouchEvent(ev);
 
         int action = ev.getActionMasked();
         if (action == ACTION_DOWN) {
@@ -201,6 +204,16 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
 
     private void cancelLongPress() {
         mLongPressState = STATE_CANCELLED;
+    }
+
+    // MiraCLO: double tap on empty home screen space (Mira Studio > Launcher > Gestures)
+    @Override
+    public boolean onDoubleTap(MotionEvent event) {
+        if (com.android.launcher3.miraclo.MiraCLOLauncher.onDoubleTap(mLauncher)) {
+            cancelLongPress();
+            return true;
+        }
+        return false;
     }
 
     @Override

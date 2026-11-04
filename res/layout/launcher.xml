@@ -63,6 +63,12 @@
             android:orientation="horizontal">
         </com.android.launcher3.pageindicators.PageIndicatorDotsWithArrows>
 
+        <!-- MiraCLO: home search pill (above the dock) or bar (below it) -->
+        <com.android.launcher3.miraclo.MiraCLOHomeSearchView
+            android:id="@+id/miraclo_home_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <include
             android:id="@+id/drop_target_bar"
             layout="@layout/drop_target_bar" />

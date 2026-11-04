@@ -160,6 +160,186 @@
 
     </grid-option>
 
+    <!-- MiraCLO: 4 columns x 5 rows on phones (Mira Studio > Home screen & icons). The app
+         drawer uses the same number of columns. -->
+    <grid-option
+        launcher:name="miraclo_4_by_5"
+        launcher:numRows="5"
+        launcher:numColumns="4"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="4"
+        launcher:numHotseatIcons="4"
+        launcher:numAllAppsColumns="4"
+        launcher:dbFile="launcher_miraclo_4_by_5.db"
+        launcher:defaultLayoutId="@xml/default_workspace_4x4"
+        launcher:deviceCategory="phone" >
+
+        <display-option
+            launcher:name="MiraCLO Phone"
+            launcher:minWidthDps="380"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="54"
+            launcher:iconTextSize="13"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="104"
+            launcher:canBeDefault="false" />
+
+        <display-option
+            launcher:name="MiraCLO Small Phone"
+            launcher:minWidthDps="255"
+            launcher:minHeightDps="400"
+            launcher:iconImageSize="50"
+            launcher:iconTextSize="13"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="100"
+            launcher:canBeDefault="false" />
+
+    </grid-option>
+
+    <!-- MiraCLO: 4 columns x 6 rows on phones (Mira Studio > Home screen & icons). The app
+         drawer uses the same number of columns. -->
+    <grid-option
+        launcher:name="miraclo_4_by_6"
+        launcher:numRows="6"
+        launcher:numColumns="4"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="4"
+        launcher:numHotseatIcons="4"
+        launcher:numAllAppsColumns="4"
+        launcher:dbFile="launcher_miraclo_4_by_6.db"
+        launcher:defaultLayoutId="@xml/default_workspace_4x4"
+        launcher:deviceCategory="phone" >
+
+        <display-option
+            launcher:name="MiraCLO Phone"
+            launcher:minWidthDps="380"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="54"
+            launcher:iconTextSize="13"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="104"
+            launcher:canBeDefault="false" />
+
+        <display-option
+            launcher:name="MiraCLO Small Phone"
+            launcher:minWidthDps="255"
+            launcher:minHeightDps="400"
+            launcher:iconImageSize="50"
+            launcher:iconTextSize="13"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="100"
+            launcher:canBeDefault="false" />
+
+    </grid-option>
+
+    <!-- MiraCLO: 5 columns x 6 rows on phones (Mira Studio > Home screen & icons). The app
+         drawer uses the same number of columns. -->
+    <grid-option
+        launcher:name="miraclo_5_by_6"
+        launcher:numRows="6"
+        launcher:numColumns="5"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="4"
+        launcher:numHotseatIcons="5"
+        launcher:numAllAppsColumns="5"
+        launcher:dbFile="launcher_miraclo_5_by_6.db"
+        launcher:defaultLayoutId="@xml/default_workspace_5x5"
+        launcher:deviceCategory="phone" >
+
+        <display-option
+            launcher:name="MiraCLO Phone"
+            launcher:minWidthDps="380"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="50"
+            launcher:iconTextSize="12.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="104"
+            launcher:canBeDefault="false" />
+
+        <display-option
+            launcher:name="MiraCLO Small Phone"
+            launcher:minWidthDps="255"
+            launcher:minHeightDps="400"
+            launcher:iconImageSize="46"
+            launcher:iconTextSize="12.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="100"
+            launcher:canBeDefault="false" />
+
+    </grid-option>
+
+    <!-- MiraCLO: 6 columns x 5 rows on phones (Mira Studio > Home screen & icons). The app
+         drawer uses the same number of columns. -->
+    <grid-option
+        launcher:name="miraclo_6_by_5"
+        launcher:numRows="5"
+        launcher:numColumns="6"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="4"
+        launcher:numHotseatIcons="6"
+        launcher:numAllAppsColumns="6"
+        launcher:dbFile="launcher_miraclo_6_by_5.db"
+        launcher:defaultLayoutId="@xml/default_workspace_6x5"
+        launcher:deviceCategory="phone" >
+
+        <display-option
+            launcher:name="MiraCLO Phone"
+            launcher:minWidthDps="380"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="44"
+            launcher:iconTextSize="11.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="96"
+            launcher:canBeDefault="false" />
+
+        <display-option
+            launcher:name="MiraCLO Small Phone"
+            launcher:minWidthDps="255"
+            launcher:minHeightDps="400"
+            launcher:iconImageSize="40"
+            launcher:iconTextSize="11.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="92"
+            launcher:canBeDefault="false" />
+
+    </grid-option>
+
+    <!-- MiraCLO: 6 columns x 6 rows on phones (Mira Studio > Home screen & icons). The app
+         drawer uses the same number of columns. -->
+    <grid-option
+        launcher:name="miraclo_6_by_6"
+        launcher:numRows="6"
+        launcher:numColumns="6"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="4"
+        launcher:numHotseatIcons="6"
+        launcher:numAllAppsColumns="6"
+        launcher:dbFile="launcher_miraclo_6_by_6.db"
+        launcher:defaultLayoutId="@xml/default_workspace_6x5"
+        launcher:deviceCategory="phone" >
+
+        <display-option
+            launcher:name="MiraCLO Phone"
+            launcher:minWidthDps="380"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="44"
+            launcher:iconTextSize="11.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="96"
+            launcher:canBeDefault="false" />
+
+        <display-option
+            launcher:name="MiraCLO Small Phone"
+            launcher:minWidthDps="255"
+            launcher:minHeightDps="400"
+            launcher:iconImageSize="40"
+            launcher:iconTextSize="11.5"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="92"
+            launcher:canBeDefault="false" />
+
+    </grid-option>
+
     <grid-option
         launcher:name="6_by_5"
         launcher:numRows="5"

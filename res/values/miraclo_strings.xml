@@ -26,4 +26,17 @@
         <item>coloros</item>
         <item>default</item>
     </string-array>
+
+    <!-- Icon shapes (Mira Studio > Home screen & icons) -->
+    <string name="miraclo_shape_squircle">Squircle</string>
+    <string name="miraclo_shape_smooth_square">Smooth square</string>
+    <string name="miraclo_shape_soft_square">Soft square</string>
+    <string name="miraclo_shape_rounded_square">Rounded square</string>
+    <string name="miraclo_shape_rice_ball">Rice ball</string>
+    <string name="miraclo_shape_pebble">Pebble</string>
+    <string name="miraclo_shape_teardrop">Teardrop</string>
+    <string name="miraclo_shape_nine_sided_cookie">9-sided cookie</string>
+    <string name="miraclo_shape_twelve_sided_cookie">12-sided cookie</string>
+    <string name="miraclo_shape_clover">Clover</string>
+    <string name="miraclo_shape_flower">Flower</string>
 </resources>

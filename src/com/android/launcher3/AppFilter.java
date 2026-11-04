@@ -17,9 +17,11 @@ import javax.inject.Inject;
 public class AppFilter {
 
     private final Set<ComponentName> mFilteredComponents;
+    private final Context mMiraContext;
 
     @Inject
     public AppFilter(@ApplicationContext Context context) {
+        mMiraContext = context;
         mFilteredComponents = Arrays.stream(
                 context.getResources().getStringArray(R.array.filtered_components))
                 .map(ComponentName::unflattenFromString)
@@ -27,6 +29,8 @@ public class AppFilter {
     }
 
     public boolean shouldShowApp(ComponentName app) {
-        return !mFilteredComponents.contains(app);
+        // MiraCLO: apps hidden in Mira Studio stay out of the app drawer and search
+        return !mFilteredComponents.contains(app)
+                && !com.android.launcher3.miraclo.MiraCLOLauncher.isHidden(mMiraContext, app.getPackageName());
     }
 }

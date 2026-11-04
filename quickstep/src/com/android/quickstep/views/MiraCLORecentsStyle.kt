@@ -37,7 +37,7 @@ object MiraCLORecentsStyle {
 
     @JvmStatic
     fun isStacked(prefs: SharedPreferences): Boolean =
-        prefs.getString(KEY_RECENTS_STYLE, STYLE_COLOROS) == STYLE_COLOROS
+        prefs.getString(KEY_RECENTS_STYLE, "default") == STYLE_COLOROS
 
     /**
      * How much of the focused card's width separates its edge from the edge of a card [depth]

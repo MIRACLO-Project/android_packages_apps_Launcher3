@@ -119,7 +119,8 @@ public interface WorkspaceLayoutManager {
         } else {
             // Show folder title if not in the hotseat
             if (child instanceof FolderIcon) {
-                ((FolderIcon) child).setTextVisible(true);
+                ((FolderIcon) child).setTextVisible(
+                        com.android.launcher3.miraclo.MiraCLOLauncher.homeLabels(child.getContext()));
             }
             layout = getScreenWithId(screenId);
         }

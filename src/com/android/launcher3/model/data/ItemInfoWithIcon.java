@@ -378,8 +378,9 @@ public abstract class ItemInfoWithIcon extends ItemInfo {
      * Returns true if the current BitmapInfo can support cropping to custom icon shapes.
      */
     public boolean supportsCustomShapes(@DrawableCreationFlags int creationFlags) {
+        // MiraCLO: the chosen shape applies to every icon, themed or not (unthemed icons
+        // were drawn as plain squares).
         return Flags.enableLauncherIconShapes()
-                && (creationFlags & FLAG_THEMED) != 0
                 && bitmap.isFullBleed();
     }
 

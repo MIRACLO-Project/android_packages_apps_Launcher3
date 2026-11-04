@@ -147,7 +147,10 @@ constructor(
     private fun parseIconState(oldState: IconState?): IconState {
         val shapeModel =
             prefs.get(PREF_ICON_SHAPE).let { shapeOverride ->
-                ShapesProvider.iconShapes.firstOrNull { it.key == shapeOverride }
+                // MiraCLO: circle unless another shape is chosen
+                ShapesProvider.iconShapes.firstOrNull {
+                    it.key == shapeOverride.ifEmpty { ShapesProvider.CIRCLE_KEY }
+                }
             }
         val iconMask =
             when {

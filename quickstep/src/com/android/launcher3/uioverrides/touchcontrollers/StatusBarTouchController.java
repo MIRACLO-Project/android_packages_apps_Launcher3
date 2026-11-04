@@ -63,6 +63,9 @@ public class StatusBarTouchController implements TouchController {
     private final Supplier<Boolean> mIsEnabledCheck;
     private final CachedEventDispatcher mEventDispatcher = new CachedEventDispatcher();
 
+    /** MiraCLO: moves a home screen swipe to the notifications (left) or QS (right) side. */
+    private float mMiraOffsetX = 0f;
+
     /* If {@code false}, this controller should not handle the input {@link MotionEvent}.*/
     private boolean mCanIntercept;
 
@@ -81,7 +84,14 @@ public class StatusBarTouchController implements TouchController {
 
     private void dispatchTouchEvent(MotionEvent ev) {
         if (mSystemUiProxy.isActive()) {
-            mSystemUiProxy.onStatusBarTouchEvent(ev);
+            if (mMiraOffsetX != 0f) {
+                MotionEvent moved = MotionEvent.obtain(ev);
+                moved.offsetLocation(mMiraOffsetX, 0f);
+                mSystemUiProxy.onStatusBarTouchEvent(moved);
+                moved.recycle();
+            } else {
+                mSystemUiProxy.onStatusBarTouchEvent(ev);
+            }
         }
     }
 
@@ -106,6 +116,27 @@ public class StatusBarTouchController implements TouchController {
             float dy = ev.getY() - mDownEvent.y;
             float dx = ev.getX() - mDownEvent.x;
             if (dy > mTouchSlop && dy > Math.abs(dx)) {
+                // MiraCLO: a swipe down from the middle of the home screen can open search or
+                // Quick Settings (Mira Studio > Launcher > Gestures); from the top edge it
+                // still opens the notification shade.
+                int miraSwipe = com.android.launcher3.miraclo.MiraCLOLauncher.swipeDownAction(mLauncher.asContext());
+                boolean miraFromMiddle = mDownEvent.y
+                        > mLauncher.getDeviceProfile().getInsets().top + mTouchSlop * 4;
+                if (!mEventDispatcher.hasConsumer() && miraFromMiddle
+                        && miraSwipe == com.android.launcher3.miraclo.MiraCLOLauncher.SWIPE_SEARCH) {
+                    mCanIntercept = false;
+                    cleanupAfterGesture();
+                    com.android.launcher3.miraclo.MiraCLOHomeSearch.open(mLauncher.asContext());
+                    return false;
+                }
+                // From the middle of the home screen the shade follows the finger on the
+                // chosen side: notifications on the left, Quick Settings on the right.
+                if (!mEventDispatcher.hasConsumer() && miraFromMiddle) {
+                    float width = mLauncher.getDragLayer().getWidth();
+                    float side = miraSwipe == com.android.launcher3.miraclo.MiraCLOLauncher.SWIPE_QUICK_SETTINGS
+                            ? 0.75f : 0.25f;
+                    mMiraOffsetX = width * side - mDownEvent.x;
+                }
                 if (!mEventDispatcher.hasConsumer()) {
                     mEventDispatcher.setConsumer(this::dispatchTouchEvent);
                 }
@@ -134,6 +165,7 @@ public class StatusBarTouchController implements TouchController {
 
     private void cleanupAfterGesture() {
         mEventDispatcher.clearConsumerAndCache();
+        mMiraOffsetX = 0f;
     }
 
     private boolean canInterceptTouch(MotionEvent ev) {

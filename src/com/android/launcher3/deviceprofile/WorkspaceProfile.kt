@@ -400,7 +400,9 @@ data class WorkspaceProfile(
 
             val iconDrawablePaddingOriginalPx = responsiveWorkspaceCellSpec.iconDrawablePadding
             var iconTextSizePx = responsiveWorkspaceCellSpec.iconTextSize
-            var iconSizePx = responsiveWorkspaceCellSpec.iconSize
+            var iconSizePx =
+                com.android.launcher3.miraclo.MiraCLOHomeSearch.scaled(
+                    responsiveWorkspaceCellSpec.iconSize)
             val cellWidthPx = responsiveWorkspaceWidthSpec.cellSizePx
             var cellHeightPx = responsiveWorkspaceHeightSpec.cellSizePx
             var maxIconTextLineCount = responsiveWorkspaceCellSpec.iconTextMaxLineCount
