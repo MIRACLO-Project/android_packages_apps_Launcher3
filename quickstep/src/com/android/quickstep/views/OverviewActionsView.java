@@ -213,6 +213,38 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mSplitButton = findViewById(R.id.action_split);
         mSplitButton.setOnClickListener(this);
         mSaveAppPairButton.setOnClickListener(this);
+        addMiraCloseAll();
+    }
+
+    /**
+     * MIRACLO: a round close-all button next to the actions, so clearing recents never needs a
+     * scroll to the end of the list. It presses Android's own Clear all.
+     */
+    private void addMiraCloseAll() {
+        final float d = getResources().getDisplayMetrics().density;
+        final android.widget.TextView x = new android.widget.TextView(getContext());
+        x.setText("\u2715");
+        x.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 18f);
+        x.setTextColor(android.graphics.Color.WHITE);
+        x.setGravity(android.view.Gravity.CENTER);
+        final android.graphics.drawable.GradientDrawable bg =
+                new android.graphics.drawable.GradientDrawable();
+        bg.setShape(android.graphics.drawable.GradientDrawable.OVAL);
+        bg.setColor(0x40FFFFFF);
+        x.setBackground(new android.graphics.drawable.RippleDrawable(
+                android.content.res.ColorStateList.valueOf(0x33FFFFFF), bg, null));
+        x.setContentDescription(getContext().getString(R.string.recents_clear_all));
+        x.setOnClickListener(v -> {
+            View clear = getRootView().findViewById(R.id.clear_all);
+            if (clear != null) {
+                clear.performClick();
+            }
+        });
+        final LinearLayout.LayoutParams lp =
+                new LinearLayout.LayoutParams(Math.round(48 * d), Math.round(48 * d));
+        lp.setMarginStart(Math.round(16 * d));
+        lp.gravity = android.view.Gravity.CENTER_VERTICAL;
+        mActionButtons.addView(x, lp);
     }
 
     /**

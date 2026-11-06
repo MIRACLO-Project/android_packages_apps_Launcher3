@@ -20,6 +20,7 @@ import android.provider.Settings
  * - miraclo_home_search_swipe: 1 to open search with a swipe down on the home screen
  * - miraclo_themed_icons_drawer: 1 to theme the app drawer icons too (themed icons scope)
  * - miraclo_icon_scale: home screen, dock and drawer icon size in percent (80..120, default 100)
+ * - miraclo_home_search_app: the app a tap opens to search (a package), empty for Mira search
  */
 object MiraCLOHomeSearch {
     const val KEY_STYLE = "miraclo_home_search"
@@ -27,6 +28,7 @@ object MiraCLOHomeSearch {
     const val KEY_SWIPE = "miraclo_home_search_swipe"
     const val KEY_THEMED_DRAWER = "miraclo_themed_icons_drawer"
     const val KEY_ICON_SCALE = "miraclo_icon_scale"
+    const val KEY_APP = "miraclo_home_search_app"
 
     const val STYLE_OFF = 0
     const val STYLE_PILL = 1
@@ -70,6 +72,11 @@ object MiraCLOHomeSearch {
 
     /** Whether our search bar sits below the dock, so the dock keeps room for it. */
     @JvmStatic fun barBelowDock(): Boolean = barBelow
+
+    /** Room the bar needs under the dock icons: 10dp gap, the 48dp bar, 10dp below it. */
+    @JvmStatic
+    fun barSpacePx(): Int =
+        Math.round(68f * android.content.res.Resources.getSystem().displayMetrics.density)
 
     /** Icon size multiplier (0.8..1.2). */
     @JvmStatic fun iconScale(): Float = scale
@@ -120,8 +127,56 @@ object MiraCLOHomeSearch {
         scale = int(context, KEY_ICON_SCALE, 100).coerceIn(80, 120) / 100f
     }
 
+    /** Whether themed icons are on, so the search pill and bar take the theme colours too. */
+    @JvmStatic
+    fun themedIcons(context: Context): Boolean =
+        runCatching {
+                com.android.launcher3.graphics.ThemeManager.INSTANCE.get(context).isIconThemeEnabled
+            }
+            .getOrDefault(false)
+
+    private fun app(context: Context): String? =
+        runCatching { Settings.Secure.getString(context.contentResolver, KEY_APP) }
+            .getOrNull()
+            ?.takeIf { it.isNotEmpty() }
+
+    /** The search bar's text: what it searches, or the app it opens. */
+    @JvmStatic
+    fun barLabel(context: Context): String {
+        val pkg = app(context) ?: return "Search apps, contacts, settings, web"
+        val name =
+            runCatching {
+                    val pm = context.packageManager
+                    pm.getApplicationInfo(pkg, 0).loadLabel(pm).toString()
+                }
+                .getOrNull()
+        return if (name != null) "Search with $name" else "Search"
+    }
+
     @JvmStatic
     fun open(context: Context) {
+        val pkg = app(context)
+        if (pkg != null) {
+            val pm = context.packageManager
+            val tries =
+                listOfNotNull(
+                    // Google's search box opens straight into search.
+                    Intent("android.search.action.GLOBAL_SEARCH").setPackage(pkg),
+                    // Other apps (browsers, assistants) open as they are.
+                    pm.getLaunchIntentForPackage(pkg),
+                )
+            for (i in tries) {
+                if (i.action == "android.search.action.GLOBAL_SEARCH" && pm.resolveActivity(i, 0) == null) continue
+                val ok =
+                    runCatching {
+                            context.startActivity(i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                            true
+                        }
+                        .getOrDefault(false)
+                if (ok) return
+            }
+            // The app was removed: fall back to Mira search.
+        }
         context.startActivity(
             Intent(context, MiraCLOSearchActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION)

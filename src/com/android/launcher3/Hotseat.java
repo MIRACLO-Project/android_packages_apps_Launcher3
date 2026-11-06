@@ -291,9 +291,7 @@ public class Hotseat extends CellLayout implements Insettable {
             // space in its parent (hotseat). If hotseatBarSizePx is less than that, we let it go
             // beyond and offset the content accordingly.
             int totalHeightForQsb = grid.getQsbOffsetY() + grid.getHotseatProfile().getQsbHeight();
-            topOverlap = com.android.launcher3.miraclo.MiraCLOHomeSearch.barBelowDock()
-                    ? Math.max(0, totalHeightForQsb - grid.getHotseatProfile().getBarSizePx())
-                    : 0;
+            topOverlap = 0;
             lp.height = grid.getHotseatProfile().getBarSizePx() + topOverlap;
         }
 

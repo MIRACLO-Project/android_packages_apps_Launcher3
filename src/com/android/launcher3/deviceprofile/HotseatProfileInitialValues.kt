@@ -78,7 +78,10 @@ data class HotseatProfileInitialValues(
                 // MIRACLO: no search bar under the dock, so no empty gap for one.
                 return (hotseatIconSizePx + barBottomSpacePx)
             } else {
-                return (hotseatIconSizePx + qsbSpace + qsbVisualHeight + barBottomSpacePx)
+                // MIRACLO: room for our search bar (not Android's search widget) under the dock.
+                return (hotseatIconSizePx +
+                    com.android.launcher3.miraclo.MiraCLOHomeSearch.barSpacePx() +
+                    barBottomSpacePx)
             }
         }
 

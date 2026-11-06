@@ -116,6 +116,7 @@ public final class MiraCLOIconPacks {
                 || display == BubbleTextView.DISPLAY_SEARCH_RESULT_SMALL
                 || display == BubbleTextView.DISPLAY_SEARCH_RESULT_APP_ROW;
         boolean same = prefs.getBoolean(KEY_SAME, true);
+        // MIRACLO: Android's own round icons until a pack (Mira icons or another) is picked.
         String pkg = prefs.getString(drawer && !same ? KEY_DRAWER : KEY_HOME, "");
         return TextUtils.isEmpty(pkg) ? null : pkg;
     }

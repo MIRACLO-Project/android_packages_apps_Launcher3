@@ -9,7 +9,7 @@
     <string name="miraclo_icon_pack_same_summary">Use the home screen pack in the app drawer too</string>
     <string name="miraclo_icon_pack_home_title">Home screen icon pack</string>
     <string name="miraclo_icon_pack_drawer_title">App drawer icon pack</string>
-    <string name="miraclo_icon_pack_system">System icons</string>
+    <string name="miraclo_icon_pack_system">Android icons (round)</string>
 
     <!-- Recents style -->
     <string name="miraclo_recents_style_title">Recents style</string>
