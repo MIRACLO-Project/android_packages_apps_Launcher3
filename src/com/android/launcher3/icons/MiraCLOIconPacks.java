@@ -19,7 +19,12 @@ package com.android.launcher3.icons;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
@@ -33,6 +38,7 @@ import android.util.LruCache;
 
 import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.model.data.ItemInfoWithIcon;
@@ -107,8 +113,75 @@ public final class MiraCLOIconPacks {
         sIcons.evictAll();
     }
 
+    /** Mira Studio's keys (Settings.Secure) for the icon packs and the recents style. */
+    private static final String SECURE_SAME = "miraclo_icon_pack_same";
+    private static final String SECURE_HOME = "miraclo_icon_pack_home";
+    private static final String SECURE_DRAWER = "miraclo_icon_pack_drawer";
+    private static final String SECURE_RECENTS = "miraclo_recents_style";
+    private static final String KEY_RECENTS = "pref_recents_style";
+    private static boolean sSyncStarted;
+
+    /** Starts following Mira Studio's icon pack and recents choices (once per process). */
+    public static void startSync(Context context) {
+        synchronized (MiraCLOIconPacks.class) {
+            if (sSyncStarted) return;
+            sSyncStarted = true;
+        }
+        final Context app = context.getApplicationContext();
+        copyFromStudio(app, false);
+        try {
+            ContentObserver observer = new ContentObserver(new Handler(Looper.getMainLooper())) {
+                @Override
+                public void onChange(boolean selfChange) {
+                    copyFromStudio(app, true);
+                }
+            };
+            ContentResolver cr = app.getContentResolver();
+            for (String key : new String[] {SECURE_SAME, SECURE_HOME, SECURE_DRAWER, SECURE_RECENTS}) {
+                cr.registerContentObserver(Settings.Secure.getUriFor(key), false, observer);
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Mira Studio sync failed", e);
+        }
+    }
+
+    private static void copyFromStudio(Context app, boolean reload) {
+        try {
+            ContentResolver cr = app.getContentResolver();
+            SharedPreferences prefs = LauncherPrefs.getPrefs(app);
+            SharedPreferences.Editor ed = prefs.edit();
+            boolean icons = false;
+            boolean any = false;
+            String same = Settings.Secure.getString(cr, SECURE_SAME);
+            if (same != null) {
+                boolean v = !"0".equals(same);
+                if (prefs.getBoolean(KEY_SAME, true) != v) { ed.putBoolean(KEY_SAME, v); icons = true; }
+            }
+            String home = Settings.Secure.getString(cr, SECURE_HOME);
+            if (home != null && !home.equals(prefs.getString(KEY_HOME, ""))) {
+                ed.putString(KEY_HOME, home); icons = true;
+            }
+            String drawer = Settings.Secure.getString(cr, SECURE_DRAWER);
+            if (drawer != null && !drawer.equals(prefs.getString(KEY_DRAWER, ""))) {
+                ed.putString(KEY_DRAWER, drawer); icons = true;
+            }
+            String recents = Settings.Secure.getString(cr, SECURE_RECENTS);
+            if (recents != null && !recents.equals(prefs.getString(KEY_RECENTS, "default"))) {
+                ed.putString(KEY_RECENTS, recents); any = true;
+            }
+            if (icons || any) ed.apply();
+            if (icons && reload) {
+                clear();
+                LauncherAppState.getInstance(app).getModel().forceReload("icon_pack_changed");
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Mira Studio sync failed", e);
+        }
+    }
+
     /** The pack chosen for where [display] shows icons, or null for the normal icons. */
     private static String packFor(Context context, int display) {
+        startSync(context);
         SharedPreferences prefs = LauncherPrefs.getPrefs(context);
         boolean drawer = display == BubbleTextView.DISPLAY_ALL_APPS
                 || display == BubbleTextView.DISPLAY_PREDICTION_ROW

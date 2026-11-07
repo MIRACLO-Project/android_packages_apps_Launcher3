@@ -24,38 +24,6 @@
         android:persistent="false"
         android:widgetLayout="@layout/notification_pref_warning" />
 
-    <!-- MIRACLO: icon packs, one for the home screen and one for the app drawer -->
-    <SwitchPreference
-        android:key="pref_icon_pack_same"
-        android:title="@string/miraclo_icon_pack_same_title"
-        android:summary="@string/miraclo_icon_pack_same_summary"
-        android:disableDependentsState="true"
-        android:defaultValue="true"
-        android:persistent="true" />
-
-    <com.android.launcher3.settings.MiraCLOIconPackPreference
-        android:key="pref_icon_pack_home"
-        android:title="@string/miraclo_icon_pack_home_title"
-        android:dialogTitle="@string/miraclo_icon_pack_home_title"
-        android:persistent="true" />
-
-    <com.android.launcher3.settings.MiraCLOIconPackPreference
-        android:key="pref_icon_pack_drawer"
-        android:title="@string/miraclo_icon_pack_drawer_title"
-        android:dialogTitle="@string/miraclo_icon_pack_drawer_title"
-        android:dependency="pref_icon_pack_same"
-        android:persistent="true" />
-
-    <!-- MIRACLO: ColorOS (stacked) or stock recents layout -->
-    <com.android.launcher3.settings.MiraCLOListPreference
-        android:key="pref_recents_style"
-        android:title="@string/miraclo_recents_style_title"
-        android:dialogTitle="@string/miraclo_recents_style_title"
-        android:entries="@array/miraclo_recents_style_entries"
-        android:entryValues="@array/miraclo_recents_style_values"
-        android:defaultValue="default"
-        android:persistent="true"
-        launcher:useSimpleSummaryProvider="true" />
 
     <!--
       LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_ENABLED(613)
@@ -69,5 +37,14 @@
         android:persistent="true"
         launcher:logIdOn="613"
         launcher:logIdOff="614" />
-
+    <!-- MIRACLO: everything else (icons, icon packs, recents, search) lives in Mira Studio -->
+    <Preference
+        android:key="pref_miraclo_advanced"
+        android:title="Advanced settings"
+        android:summary="Icons, icon packs, recents style and more in Mira Studio"
+        android:persistent="false">
+        <intent
+            android:action="org.miraclo.studio.HOME_ICONS"
+            android:targetPackage="com.android.settings" />
+    </Preference>
 </androidx.preference.PreferenceScreen>
