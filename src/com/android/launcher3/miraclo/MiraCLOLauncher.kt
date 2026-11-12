@@ -184,7 +184,7 @@ object MiraCLOLauncher {
      */
     @JvmStatic
     fun applyPageTransition(v: View, progress: Float, distance: Int) {
-        val p = progress.coerceIn(-1f, 1f)
+        val p = if (progress.isNaN()) 0f else progress.coerceIn(-1f, 1f)
         val a = abs(p)
         var rotation = 0f
         var scale = 1f

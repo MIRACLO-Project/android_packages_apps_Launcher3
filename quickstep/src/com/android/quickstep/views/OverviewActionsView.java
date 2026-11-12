@@ -214,6 +214,36 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mSplitButton.setOnClickListener(this);
         mSaveAppPairButton.setOnClickListener(this);
         addMiraCloseAll();
+        mMiraScreenshot = screenshotButton;
+        miraApplyHidden();
+        android.database.ContentObserver obs = new android.database.ContentObserver(
+                new android.os.Handler(android.os.Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange) {
+                miraApplyHidden();
+            }
+        };
+        android.content.ContentResolver cr = getContext().getContentResolver();
+        cr.registerContentObserver(android.provider.Settings.Secure.getUriFor(
+                "miraclo_recents_hide_screenshot"), false, obs);
+        cr.registerContentObserver(android.provider.Settings.Secure.getUriFor(
+                "miraclo_recents_hide_clear"), false, obs);
+    }
+
+    private View mMiraScreenshot;
+    private View mMiraCloseAll;
+
+    /** MIRACLO: Mira Studio can hide the Screenshot and close-all buttons. */
+    private void miraApplyHidden() {
+        android.content.ContentResolver cr = getContext().getContentResolver();
+        if (mMiraScreenshot != null) {
+            mMiraScreenshot.setVisibility(android.provider.Settings.Secure.getInt(cr,
+                    "miraclo_recents_hide_screenshot", 0) != 0 ? GONE : VISIBLE);
+        }
+        if (mMiraCloseAll != null) {
+            mMiraCloseAll.setVisibility(android.provider.Settings.Secure.getInt(cr,
+                    "miraclo_recents_hide_clear", 0) != 0 ? GONE : VISIBLE);
+        }
     }
 
     /**
@@ -244,6 +274,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
                 new LinearLayout.LayoutParams(Math.round(48 * d), Math.round(48 * d));
         lp.setMarginStart(Math.round(16 * d));
         lp.gravity = android.view.Gravity.CENTER_VERTICAL;
+        mMiraCloseAll = x;
         mActionButtons.addView(x, lp);
     }
 
