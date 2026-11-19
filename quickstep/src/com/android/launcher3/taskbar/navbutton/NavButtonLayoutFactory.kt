@@ -80,7 +80,10 @@ class NavButtonLayoutFactory {
             val homeButton: ImageView? = navButtonContainer.findViewById(R.id.home)
             val recentsButton: ImageView? = navButtonContainer.findViewById(R.id.recent_apps)
             return when {
-                isInSetup -> {
+                // MIRACLO: a phone in 3-button mode keeps its normal layout during setup. The
+                // setup layout is made for setup wizards that show only Back; with all three
+                // buttons it squeezes them against the start edge.
+                isInSetup && !isPhoneNavMode -> {
                     SetupNavLayoutter(
                         resources,
                         navButtonsView,
